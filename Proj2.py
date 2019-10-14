@@ -17,9 +17,8 @@ import time
 from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
-from LightEffect import *
 
-num_pixels = 25  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 30  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -206,16 +205,10 @@ def LED_Action(scene):
     PURPLE = (180, 0, 255)
     OFF = (0,0,0)
 
-    #Process arguments
-    opt_parse()
-    #Create NeoPixel object with appropriate configuration.
-    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
-    #Intialize the library (must be called once before other functions).
-    strip.begin()
 
     # Need to add effect
     if scene == 'scene_1':
-        TheaterChase(strip, 255, 0, 0, .2, 10)
+        
 
     elif scene == 'scene_2':
         BouncingBalls(strip, 255, 0, 0, 3)
