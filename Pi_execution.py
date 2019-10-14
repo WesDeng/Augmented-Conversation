@@ -17,7 +17,7 @@ import time
 from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
-num_pixels = 10  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 8  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -136,48 +136,47 @@ def listen_print_loop(responses):
 
 def decide_action(transcript):
 
-    #here we're using some simple code on the final transcript from
-    #GCP to figure out what to do, how to respond.
+    # Need to addd key words
+    if re.search("one",transcript, re.I):
+        scene_1()
+    if re.search("two",transcript, re.I):
+        scene_2()
+    if re.search("three", transcript, re.I):
+        scene_3()
+    #if re.search("exciting", transcript, re.I):
 
-    if re.search("hey",transcript, re.I):
-        Speaker_Action('greeting_1')
-        LED_Action('speaking')
-
-    if re.search("stressful",transcript, re.I):
-        t2s = gTTS("You got this! Here's something for you!", lang ='en')
-        t2s.save('stressful.mp3')
-        Speaker_Action('stressful.mp3')
-        # Something to pause.
-        Speaker_Action('believer.mp3')
-
-    if re.search("what's up", transcript, re.I):
-        Speaker_Action('greeting_1')
-        LED_Action('speaking')
-
-    if re.search("exciting", transcript, re.I):
-        t2s = gTTS("", lang ='en')
-        t2s.save('exciting.mp3')
-        Speaker_Action('exciting.mp3')
-        # Something to pause.
-        Speaker_Action('believer.mp3')
 
 def scene_1():
-
     # Sound
-    Speaker_Action('chopin.mp3')
+    Speaker_Action('scene_1.mp3')
     # Light
     LED_Action('scene_1')
     # Motor
     Motor_Action('scene_1')
 
-
 def scene_2():
     # Sound
-    Speaker_Action('believer.mp3')
+    Speaker_Action('scene_2.mp3')
     # Light
     LED_Action('scene_2')
     # Motor
     Motor_Action('scene_2')
+
+def scene_3():
+    #Sound
+    Speaker_Action('scene_3.mp3')
+    # Light
+    LED_Action('scene_3')
+    # Motor
+    Motor_Action('scene_3')
+
+def scene_4():
+    #Sound
+    Speaker_Action('scene_4.mp3')
+    # Light
+    LED_Action('scene_4')
+    # Motor
+    Motor_Action('scene_4')
 
 
 def Speaker_Action(file):
@@ -186,7 +185,6 @@ def Speaker_Action(file):
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
             pygame.time.Clock().tick(10)
-
 
 
 
@@ -202,46 +200,37 @@ def LED_Action(scene):
     PURPLE = (180, 0, 255)
     OFF = (0,0,0)
 
-    print("LED initialize off")
-    pixels.fill(OFF)
+    # Need to add effect
+    if scene == 'scene_1':
+        pixels[1].fill(RED)
 
-    if scene == 'speaking':
-        pixels[0].fill(OFF)
-        for i in range(5):
-            pixels[1].fill(BLUE)
-            time.sleep(0.1)
-            pixels.show()
+    elif scene == 'scene_2':
+        pixels[1].fill(CYAN)
 
-    elif scene == 'chopin':
-        pixels[1].fill(OFF)
-        pixels[0].fill(CYAN)
+    elif scene == 'scene_3':
+        pixels[1].fill(BLUE)
 
-    elif scene == 'believer':
-        pixels[1].fill(OFF)
-        for i in range(5):
-            pixels[1].fill(YELLOW)
-            time.sleep(0.1)
-            pixels.show()
 
 def Motor_Action(scene):
-
-    if bears == 'bears':
-        crickit.servo_1.angle = 0      # right
-        time.sleep(1)
-    elif bears == 'cardinal':
+    if scene == 'scene_1':
+        crickit.servo_1.angle = 90   # turn on humidifier.
+        time.sleep(5)
+        crickit.servo_1.angle = 0   # turn off
+    elif scene == 'scene_2':
         crickit.servo_1.angle = 180
+        time.sleep(1)
+    elif scene == 'scene_3':
+        crickit.servo_1.angle = 0
         time.sleep(1)
 
 
 def main():
 
-    #Get conversations set up.
-    t2s = gTTS('Hey there, how are you doing this morning?', lang ='en')
-    t2s.save('greeting_1.mp3')
-    t2s = gTTS("Good morning! I see that your calendar is free. What you up to toady?", lang='en')
-    t2s.save('greeting_2.mp3')
-
     language_code = 'en-US'  # a BCP-47 language tag
+    print("LED initialize white")
+    pixels.fill(OFF)
+    WHITE = (255, 255, 255)
+    pixels[1].fill(WHITE)
 
     #set up a client
     config = types.RecognitionConfig(
@@ -253,11 +242,7 @@ def main():
         config=config,
         interim_results=True)
 
-    #this section is where the action happens:
-    #a microphone stream is set up, requests are generated based on
-    #how the audiofile is chunked, and they are sent to GCP using
-    #the streaming_recognize() function for analysis. responses
-    #contains the info you get back from the API.
+
     with MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
         requests = (types.StreamingRecognizeRequest(audio_content=content)
