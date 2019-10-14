@@ -17,7 +17,7 @@ import time
 from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
-num_pixels = 8  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 2  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -137,11 +137,11 @@ def listen_print_loop(responses):
 def decide_action(transcript):
 
     # Need to addd key words
-    if re.search("one",transcript, re.I):
+    if re.search("sad",transcript, re.I):
         scene_1()
-    if re.search("two",transcript, re.I):
+    if re.search("happy",transcript, re.I):
         scene_2()
-    if re.search("three", transcript, re.I):
+    if re.search("relax", transcript, re.I):
         scene_3()
     #if re.search("exciting", transcript, re.I):
 
@@ -202,13 +202,13 @@ def LED_Action(scene):
 
     # Need to add effect
     if scene == 'scene_1':
-        pixels[1].fill(RED)
+        pixels.fill(RED)
 
     elif scene == 'scene_2':
-        pixels[1].fill(CYAN)
+        pixels.fill(CYAN)
 
     elif scene == 'scene_3':
-        pixels[1].fill(BLUE)
+        pixels.fill(BLUE)
 
 
 def Motor_Action(scene):
@@ -219,6 +219,7 @@ def Motor_Action(scene):
     elif scene == 'scene_2':
         crickit.servo_1.angle = 180
         time.sleep(1)
+        
     elif scene == 'scene_3':
         crickit.servo_1.angle = 0
         time.sleep(1)
@@ -228,9 +229,8 @@ def main():
 
     language_code = 'en-US'  # a BCP-47 language tag
     print("LED initialize white")
-    pixels.fill(OFF)
     WHITE = (255, 255, 255)
-    pixels[1].fill(WHITE)
+    pixels.fill(WHITE)
 
     #set up a client
     config = types.RecognitionConfig(
