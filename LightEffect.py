@@ -171,66 +171,66 @@ def ColorWipeReverse(strip, red, green, blue, SpeedDelay):
         time.sleep(SpeedDelay)
 
 def Wheel(WheelPosition):
-	#Generate rainbow colors across 0-255 positions.
-	if WheelPosition < 85:
-		return Color(WheelPosition * 3, 255 - WheelPosition * 3, 0)
-	elif WheelPosition < 170:
-		WheelPosition -= 85
-		return Color(255 - WheelPosition * 3, 0, WheelPosition * 3)
-	else:
-		WheelPosition -= 170
-		return Color(0, WheelPosition * 3, 255 - WheelPosition * 3)
+    #Generate rainbow colors across 0-255 positions.
+    if WheelPosition < 85:
+        return Color(WheelPosition * 3, 255 - WheelPosition * 3, 0)
+    elif WheelPosition < 170:
+        WheelPosition -= 85
+        return Color(255 - WheelPosition * 3, 0, WheelPosition * 3)
+    else:
+        WheelPosition -= 170
+        return Color(0, WheelPosition * 3, 255 - WheelPosition * 3)
 
 def Rainbow(strip, SpeedDelay):
     for i in range(0, 256):
-	for j in range(0, LED_COUNT):
-		strip.setPixelColor(j, Wheel((j + i) & 255))
-	strip.show()
-	time.sleep(SpeedDelay)
+    for j in range(0, LED_COUNT):
+        strip.setPixelColor(j, Wheel((j + i) & 255))
+    strip.show()
+    time.sleep(SpeedDelay)
 
 def RainbowCycle(strip, Iterations, SpeedDelay):
     for i in range (0, 256 * Iterations):
         for j in range (0, LED_COUNT):
             strip.setPixelColor(j, Wheel((int(j * 256 / LED_COUNT) + i) & 255))
-	strip.show()
-	time.sleep(SpeedDelay)
+    strip.show()
+    time.sleep(SpeedDelay)
 
 def ColorChase(strip, red, green, blue, SpeedDelay):
-	for i in range(LED_COUNT):
-		strip.setPixelColor(i, Color(red, green, blue))
-		strip.show()
-		time.sleep(SpeedDelay)
-		strip.setPixelColor(i, Color(0, 0, 0))
-		strip.show()
+    for i in range(LED_COUNT):
+        strip.setPixelColor(i, Color(red, green, blue))
+        strip.show()
+        time.sleep(SpeedDelay)
+        strip.setPixelColor(i, Color(0, 0, 0))
+        strip.show()
 
 def ColorChaseReverse(strip, red, green, blue, SpeedDelay):
-	for i in range(LED_COUNT, 0, -1):
-		strip.setPixelColor(i, Color(red, green, blue))
-		strip.show()
-		time.sleep(SpeedDelay)
-		strip.setPixelColor(i, Color(0, 0, 0))
-		strip.show()
+    for i in range(LED_COUNT, 0, -1):
+        strip.setPixelColor(i, Color(red, green, blue))
+        strip.show()
+        time.sleep(SpeedDelay)
+        strip.setPixelColor(i, Color(0, 0, 0))
+        strip.show()
 
 def TheaterChase(strip, red, green, blue, SpeedDelay, Iterations):
-	for i in range(0, Iterations):
-		for j in range(0, 3):
-			for k in range(0, LED_COUNT, 3):
-				strip.setPixelColor(k + j, Color(red, green, blue))
-			strip.show()
-			time.sleep(SpeedDelay)
-			for k in range(0, LED_COUNT, 3):
-				strip.setPixelColor(k + j, Color(0, 0, 0))
+    for i in range(0, Iterations):
+        for j in range(0, 3):
+            for k in range(0, LED_COUNT, 3):
+                strip.setPixelColor(k + j, Color(red, green, blue))
+            strip.show()
+            time.sleep(SpeedDelay)
+            for k in range(0, LED_COUNT, 3):
+                strip.setPixelColor(k + j, Color(0, 0, 0))
 
 def TheaterChaseRainbow(strip, SpeedDelay):
-	#Rainbow movie theater light style chaser animation.
-	for i in range(256):
-		for j in range(3):
-			for k in range(0, strip.numPixels(), 3):
-				strip.setPixelColor(k + j, Wheel((k + i) % 255))
-			strip.show()
-			time.sleep(SpeedDelay)
-			for k in range(0, strip.numPixels(), 3):
-				strip.setPixelColor(k + j, Color(0, 0, 0))
+    #Rainbow movie theater light style chaser animation.
+    for i in range(256):
+        for j in range(3):
+            for k in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(k + j, Wheel((k + i) % 255))
+            strip.show()
+            time.sleep(SpeedDelay)
+            for k in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(k + j, Color(0, 0, 0))
 
 def MeteorRain(strip, red, green, blue, MeteorSize, MeteorTrailDecay, MeteorRandomDecay, SpeedDelay):
     SetAll(strip, Color(0, 0, 0))
@@ -469,7 +469,7 @@ def MorseCode(strip, red, green, blue, Message, DotLength):
     Message = Message.upper()
     MessageArray=list(Message)
     cipher = ''
-	#Fill cipher with converted MessageArray values
+    #Fill cipher with converted MessageArray values
     for i in range(0, len(MessageArray)):
         if MessageArray[i] != ' ':
             if i < (len(MessageArray)-1):
@@ -482,12 +482,12 @@ def MorseCode(strip, red, green, blue, Message, DotLength):
         else:
             cipher += '='
     """
-	Dot length = Dot length x 1
+    Dot length = Dot length x 1
     Dash length = Dot length x 3
     Pause between elements = Dot length x 1
     Pause between characters = Dot length x 3
     Pause between words = Dot length x 7
-	"""
+    """
     for element in cipher:
         if element == '.':
             SetAll(strip, Color(red, green, blue))
