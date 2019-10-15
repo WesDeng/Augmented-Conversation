@@ -17,6 +17,8 @@ import time
 from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
+from LightEffect import *
+
 num_pixels = 25  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
@@ -148,32 +150,32 @@ def decide_action(transcript):
 
 def scene_1():
     # Sound
-    
+
     # Light
     LED_Action('scene_1')
     # Motor
     Motor_Action('scene_1')
-    
+
     Speaker_Action('scene_1.mp3')
 
 def scene_2():
     # Sound
-    
+
     # Light
     LED_Action('scene_2')
     # Motor
     Motor_Action('scene_2')
-    
+
     Speaker_Action('scene_2.mp3')
 
 def scene_3():
     #Sound
-    
+
     # Light
     LED_Action('scene_3')
     # Motor
     Motor_Action('scene_3')
-    
+
     Speaker_Action('scene_3.mp3')
 
 def scene_4():
@@ -196,8 +198,6 @@ def Speaker_Action(file):
 
 def LED_Action(scene):
 
-    ss = crickit.seesaw
-
     RED = (255, 0, 0)
     YELLOW = (255, 150, 0)
     GREEN = (0, 255, 0)
@@ -206,15 +206,22 @@ def LED_Action(scene):
     PURPLE = (180, 0, 255)
     OFF = (0,0,0)
 
+    #Process arguments
+    opt_parse()
+    #Create NeoPixel object with appropriate configuration.
+    strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
+    #Intialize the library (must be called once before other functions).
+    strip.begin()
+
     # Need to add effect
     if scene == 'scene_1':
-        pixels.fill(RED)
+        TheaterChase(strip, 255, 0, 0, .2, 10)
 
     elif scene == 'scene_2':
-        pixels.fill(CYAN)
+        BouncingBalls(strip, 255, 0, 0, 3)
 
     elif scene == 'scene_3':
-        pixels.fill(BLUE)
+        SnowSparkle(strip, 10, 10, 10, .1, random.uniform(0, .5))
 
 
 def Motor_Action(scene):
@@ -225,7 +232,7 @@ def Motor_Action(scene):
     elif scene == 'scene_2':
         crickit.servo_1.angle = 180
         time.sleep(1)
-        
+
     elif scene == 'scene_3':
         crickit.servo_1.angle = 0
         time.sleep(1)
