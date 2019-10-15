@@ -208,13 +208,21 @@ def LED_Action(scene):
 
     # Need to add effect
     if scene == 'scene_1':
-        
+        for i in range(0, 3):
+            for j in range(0, 256):
+                if i == 0:
+                    pixels.fill((j, 0, 0))
+                elif i == 1:
+                    pixels.fill((0, j, 0))
+                else: i == 2:
+                    pixels.fill((0, 0, j))
+                
 
     elif scene == 'scene_2':
-        BouncingBalls(strip, 255, 0, 0, 3)
+        pixels.fill(GREEN)
 
     elif scene == 'scene_3':
-        SnowSparkle(strip, 10, 10, 10, .1, random.uniform(0, .5))
+
 
 
 def Motor_Action(scene):
