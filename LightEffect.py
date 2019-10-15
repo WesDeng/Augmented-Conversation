@@ -1,3 +1,5 @@
+#This is the function library.  This is imported by main.py
+
 import time
 import math
 import random
@@ -129,9 +131,9 @@ def Sparkle(strip, red, green, blue, SpeedDelay):
     strip.show()
     time.sleep(SpeedDelay)
     strip.setPixelColor(pixel, Color(0, 0, 0))
-
+    
 def SnowSparkle(strip, red, green, blue, SparkleDelay, SpeedDelay):
-    SetAll(strip, Color(red, green, blue))
+    SetAll(strip, Color(red, green, blue))    
     pixel=random.randrange(0, LED_COUNT)
     strip.setPixelColor(pixel, Color(255, 255, 255))
     strip.show()
@@ -139,7 +141,7 @@ def SnowSparkle(strip, red, green, blue, SparkleDelay, SpeedDelay):
     strip.setPixelColor(pixel, Color(red, green, blue))
     strip.show()
     time.sleep(SpeedDelay)
-
+    
 def RunningLights(strip, red, green, blue, WaveDelay):
     Position=0
     for i in range (0, (LED_COUNT * 2)):
@@ -180,7 +182,7 @@ def Wheel(WheelPosition):
 	else:
 		WheelPosition -= 170
 		return Color(0, WheelPosition * 3, 255 - WheelPosition * 3)
-
+	    
 def Rainbow(strip, SpeedDelay):
     for i in range(0, 256):
 	for j in range(0, LED_COUNT):
@@ -194,7 +196,7 @@ def RainbowCycle(strip, Iterations, SpeedDelay):
             strip.setPixelColor(j, Wheel((int(j * 256 / LED_COUNT) + i) & 255))
 	strip.show()
 	time.sleep(SpeedDelay)
-
+    
 def ColorChase(strip, red, green, blue, SpeedDelay):
 	for i in range(LED_COUNT):
 		strip.setPixelColor(i, Color(red, green, blue))
@@ -639,7 +641,7 @@ def Clock2(strip, IncludeHours):
     if Seconds==HourPosition and Minutes==HourPosition:
         strip.setPixelColor(Seconds, Color(255, 255, 255))
     strip.show()
-
+    
 def FillDownRandom(strip, SpeedDelay, DisplayDelay, PauseDelay, FlushDelay):
     SetAll(strip, Color(0, 0, 0))
     #Fill down with random colors
@@ -675,3 +677,7 @@ def RandomColors(strip, SpeedDelay):
             strip.setPixelColor(i, Color(r, g, b))
         strip.show()
         time.sleep(SpeedDelay)
+
+"""
+Done
+"""
