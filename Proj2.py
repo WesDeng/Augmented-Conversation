@@ -23,6 +23,16 @@ num_pixels = 35  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
+crickit.servo_2.angle = 0
+
+# Define the basic color.
+RED = (255, 0, 0)
+YELLOW = (255, 150, 0)
+GREEN = (0, 255, 0)
+CYAN = (0, 255, 255)
+BLUE = (0, 0, 255)
+PURPLE = (180, 0, 255)
+OFF = (0,0,0)
 
 # Audio recording parameters, set for our USB mic.
 RATE = 44100 #if you change mics - be sure to change this :)
@@ -138,91 +148,88 @@ def listen_print_loop(responses):
 
 def decide_action(transcript):
 
-    # Need to addd key words
+    # Scene_1
     if re.search("sad",transcript, re.I):
         scene_1()
+
+    # Scene_2
     if re.search("relax",transcript, re.I):
         scene_2()
-    if re.search("party", transcript, re.I):
+
+    # Scene_3
+    if re.search("(ridiculous)|(bad)", transcript, re.I):
         scene_3()
+
+    # Scene_4
+    if re.search("party", transcript, re.I):
+        scene_4()
+
+
     #if re.search("exciting", transcript, re.I):
 
-
+# Sad
 def scene_1():
-    # Sound
-
     # Light
-    LED_Action('scene_1')
+    Chasing()
     # Motor
     #Motor_Action('scene_1')
-
+    # Sound
     Speaker_Action('scene_1.mp3')
 
+# Relax
 def scene_2():
-    # Sound
-
     # Light
-    LED_Action('scene_2')
+    pixels.fill(BLUE)
     # Motor
-    #Motor_Action('scene_2')
-
+    Motor_Action('scene_2')
+    # Speaker
     Speaker_Action('scene_2.mp3')
 
+# Conflict
 def scene_3():
-    #Sound
-
     # Light
     LED_Action('scene_3')
     # Motor
     #Motor_Action('scene_3')
-
+    # Speaker
     Speaker_Action('scene_3.mp3')
 
+# Party
 def scene_4():
-    #Sound
-    Speaker_Action('scene_4.mp3')
     # Light
-    LED_Action('scene_4')
+    Disco()
     # Motor
-    #Motor_Action('scene_4')
+
+    # Speaker
+    Speaker_Action('scene_4.mp3')
 
 
 def Speaker_Action(file):
     pygame.mixer.init()
     pygame.mixer.music.load(file)
     pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(10)
+    #while pygame.mixer.music.get_busy():
+            #pygame.time.Clock().tick(10)
+
+def Moter_Action(scene):
+    if scene == 'scene_2':
+        # motor.servo.2
+        crickit.servo_2.angle = 60
 
 
+# Lighting effect.
 
-def LED_Action(scene):
+def Chasing(color = BLUE, gap = 0.03):
+    for i in range(0, num_pixels):
+        pixels[i] = color
+        time.sleep(gap)
+        pixels.show()
 
-    RED = (255, 0, 0)
-    YELLOW = (255, 150, 0)
-    GREEN = (0, 255, 0)
-    CYAN = (0, 255, 255)
-    BLUE = (0, 0, 255)
-    PURPLE = (180, 0, 255)
-    OFF = (0,0,0)
-
-
-    # Need to add effect
-    if scene == 'scene_1':
-        for i in range(0, num_pixels):
-            pixels[i] = BLUE
-            time.sleep(0.03)
-            pixels.show()
-
-
-    elif scene == 'scene_2':
-        pixels.fill(GREEN)
-
-    elif scene == 'scene_3':
-        for i in range(0,40):
-            pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
-            time.sleep(0.06)
-            pixels.fill(OFF)
+def Disco():
+    for i in range(0,40):
+        pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
+        time.sleep(0.06)
+        pixels.fill(OFF)
 
 
 
