@@ -19,7 +19,7 @@ from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
 
-num_pixels = 37  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 5  # Number (37) of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -189,7 +189,7 @@ def scene_2():
 # Conflict: Ridiculous/bad
 def scene_3():
     # Light
-    pixels.fill(YELLOW)
+    pixels.fill(RED)
     # Motor
     #Motor_Action('scene_3')
     # Speaker
@@ -214,7 +214,11 @@ def Speaker_Action(file):
 def Moter_Action(scene):
     if scene == 'scene_2':
         # motor.servo.2
-        crickit.servo_2.angle = 60
+        crickit.servo_2.angle = 40 # Need to change.
+        time.sleep(0.5)
+        crickit.servo_2.angle = 20
+        time.sleep(12)
+        crickit.servo_2.angle = 40
 
 
 # Lighting effect.
