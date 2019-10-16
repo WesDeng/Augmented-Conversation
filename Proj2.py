@@ -19,7 +19,7 @@ from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
 
-num_pixels = 35  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 37  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -33,6 +33,7 @@ CYAN = (0, 255, 255)
 BLUE = (0, 0, 255)
 PURPLE = (180, 0, 255)
 OFF = (0,0,0)
+WHITE = (255,255,255)
 
 # Audio recording parameters, set for our USB mic.
 RATE = 44100 #if you change mics - be sure to change this :)
@@ -197,8 +198,8 @@ def scene_3():
 # Party
 def scene_4():
     Speaker_Action('scene_4.mp3')
-    for i in range(0,100):
-        pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
+    for i in range(0,110):
+        pixels.fill((random.randint(20,220),random.randint(50,180),random.randint(20,220)))
         time.sleep(0.1)
         pixels.fill(OFF)
 
@@ -238,9 +239,10 @@ def main():
     print("LED initialize white")
 
     INIT = (200, 200, 200)
-    for i in range(0, 41):
-        if i%2 == 0:
-            pixels[i] = INIT
+    pixels.fill(WHITE)
+    #for i in range(0, 41):
+        #if i%2 == 0:
+            #pixels[i] = INIT
 
     #set up a client
     config = types.RecognitionConfig(
