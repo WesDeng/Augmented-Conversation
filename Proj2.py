@@ -216,7 +216,7 @@ def LED_Action(scene):
                     pixels.fill((0, j, 0))
                 else: i == 2:
                     pixels.fill((0, 0, j))
-                
+
 
     elif scene == 'scene_2':
         pixels.fill(GREEN)
