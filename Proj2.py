@@ -226,8 +226,6 @@ def LED_Action(scene):
 
 
 
-
-
 def main():
     language_code = 'en-US'  # a BCP-47 language tag
     print("LED initialize white")
