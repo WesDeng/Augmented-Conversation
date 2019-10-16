@@ -9,6 +9,7 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio #for recording audio!
 import pygame  #for playing audio
+import random
 from six.moves import queue
 
 from gtts import gTTS
@@ -18,7 +19,7 @@ from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
 
-num_pixels = 30  # Number of pixels driven from Crickit NeoPixel terminal
+num_pixels = 35  # Number of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
@@ -153,7 +154,7 @@ def scene_1():
     # Light
     LED_Action('scene_1')
     # Motor
-    Motor_Action('scene_1')
+    #Motor_Action('scene_1')
 
     Speaker_Action('scene_1.mp3')
 
@@ -163,7 +164,7 @@ def scene_2():
     # Light
     LED_Action('scene_2')
     # Motor
-    Motor_Action('scene_2')
+    #Motor_Action('scene_2')
 
     Speaker_Action('scene_2.mp3')
 
@@ -173,7 +174,7 @@ def scene_3():
     # Light
     LED_Action('scene_3')
     # Motor
-    Motor_Action('scene_3')
+    #Motor_Action('scene_3')
 
     Speaker_Action('scene_3.mp3')
 
@@ -183,7 +184,7 @@ def scene_4():
     # Light
     LED_Action('scene_4')
     # Motor
-    Motor_Action('scene_4')
+    #Motor_Action('scene_4')
 
 
 def Speaker_Action(file):
@@ -208,43 +209,33 @@ def LED_Action(scene):
 
     # Need to add effect
     if scene == 'scene_1':
-        for i in range(0, 3):
-            for j in range(0, 256):
-                if i == 0:
-                    pixels.fill((j, 0, 0))
-                elif i == 1:
-                    pixels.fill((0, j, 0))
-                else: i == 2:
-                    pixels.fill((0, 0, j))
+        for i in range(0, num_pixels):
+            pixels[i] = BLUE
+            time.sleep(0.03)
+            pixels.show()
 
 
     elif scene == 'scene_2':
         pixels.fill(GREEN)
 
     elif scene == 'scene_3':
+        for i in range(0,40):
+            pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
+            time.sleep(0.06)
+            pixels.fill(OFF)
 
 
 
-def Motor_Action(scene):
-    if scene == 'scene_1':
-        crickit.servo_1.angle = 90   # turn on humidifier.
-        time.sleep(5)
-        crickit.servo_1.angle = 0   # turn off
-    elif scene == 'scene_2':
-        crickit.servo_1.angle = 180
-        time.sleep(1)
-
-    elif scene == 'scene_3':
-        crickit.servo_1.angle = 0
-        time.sleep(1)
 
 
 def main():
-
     language_code = 'en-US'  # a BCP-47 language tag
     print("LED initialize white")
-    WHITE = (200, 200, 200)
-    pixels.fill(WHITE)
+
+    INIT = (200, 200, 200)
+    for i in range(0, 41):
+        if i%2 == 0:
+            pixels[i] = INIT
 
     #set up a client
     config = types.RecognitionConfig(
