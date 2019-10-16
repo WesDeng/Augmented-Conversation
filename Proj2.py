@@ -170,30 +170,41 @@ def decide_action(transcript):
 
 # Sad
 def scene_1():
+
+    Speaker_Action('scene_1.mp3')
     # Light
-    Chasing()
+    pixels.fill(GREEN)
     # Motor
     #Motor_Action('scene_1')
-    # Sound
-    Speaker_Action('scene_1.mp3')
 
 # Relax: relax
 def scene_2():
-    # Light
-    pixels.fill(BLUE)
-    # Motor
-    Motor_Action('scene_2')
-    # Speaker
+    # Breathing.
+
     Speaker_Action('scene_2.mp3')
+
+    pixels.fill(BLUE)
+
+    Moter_Action('scene_2')
 
 # Conflict: Ridiculous/bad
 def scene_3():
-    # Light
-    pixels.fill(RED)
-    # Motor
-    #Motor_Action('scene_3')
-    # Speaker
+
     Speaker_Action('scene_3.mp3')
+    # Light
+    for i in range(0, 5):
+        pixels.fill(RED)
+        pixels.fill(OFF)
+        time.sleep(1)
+        pixels.fill(RED)
+        pixels.fill(OFF)
+        time.sleep(1)
+        pixels.fill(RED)
+        pixels.fill(OFF)
+        time.sleep(1)
+
+
+
 
 # Party
 def scene_4():
@@ -223,18 +234,22 @@ def Moter_Action(scene):
 
 # Lighting effect.
 
+def _up()
+
 def Chasing(color = BLUE, gap = 0.03):
     for i in range(0, num_pixels):
         pixels[i] = color
         time.sleep(gap)
         pixels.show()
 
-def Disco():
+def Party():
     Speaker_Action('scene_4.mp3')
     for i in range(0,80):
         pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
         time.sleep(0.1)
         pixels.fill(OFF)
+
+
 
 
 
