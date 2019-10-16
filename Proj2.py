@@ -19,7 +19,7 @@ from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
 
-num_pixels = 5  # Number (37) of pixels driven from Crickit NeoPixel terminal
+num_pixels = 35  # Number (37) of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
