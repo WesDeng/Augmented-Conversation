@@ -176,7 +176,7 @@ def scene_1():
     # Sound
     Speaker_Action('scene_1.mp3')
 
-# Relax
+# Relax: relax
 def scene_2():
     # Light
     pixels.fill(BLUE)
@@ -185,10 +185,10 @@ def scene_2():
     # Speaker
     Speaker_Action('scene_2.mp3')
 
-# Conflict
+# Conflict: Ridiculous/bad
 def scene_3():
     # Light
-    LED_Action('scene_3')
+    pixels.fill(YELLOW)
     # Motor
     #Motor_Action('scene_3')
     # Speaker
@@ -196,12 +196,11 @@ def scene_3():
 
 # Party
 def scene_4():
-    # Light
-    Disco()
-    # Motor
-
-    # Speaker
     Speaker_Action('scene_4.mp3')
+    for i in range(0,100):
+        pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
+        time.sleep(0.1)
+        pixels.fill(OFF)
 
 
 def Speaker_Action(file):
@@ -209,7 +208,7 @@ def Speaker_Action(file):
     pygame.mixer.music.load(file)
     pygame.mixer.music.play()
     #while pygame.mixer.music.get_busy():
-            #pygame.time.Clock().tick(10)
+           # pygame.time.Clock().tick(10)
 
 def Moter_Action(scene):
     if scene == 'scene_2':
@@ -226,9 +225,10 @@ def Chasing(color = BLUE, gap = 0.03):
         pixels.show()
 
 def Disco():
-    for i in range(0,40):
+    Speaker_Action('scene_4.mp3')
+    for i in range(0,80):
         pixels.fill((random.randint(1,255),random.randint(1,255),random.randint(1,255)))
-        time.sleep(0.06)
+        time.sleep(0.1)
         pixels.fill(OFF)
 
 
