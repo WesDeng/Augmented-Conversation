@@ -178,10 +178,10 @@ def scene_1():
     Speaker_Action('scene_1.mp3')
     # Light
     for i in range(0, num_pixels):
-        if i < 34:
+        if i < 34 and i%2 == 0:
             pixels[i] = YELLOW
-    pixels.brightness = 0.1
-    pixels.show()
+            pixels.brightness = 0.1
+            pixels.show()
     
     pixels.brightness = 1
     for i in range(0, num_pixels):
