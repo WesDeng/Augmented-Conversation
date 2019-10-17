@@ -165,6 +165,9 @@ def decide_action(transcript):
     # Scene_4
     if re.search("party", transcript, re.I):
         scene_4()
+        
+    if re.search("eigenvalue", transcript, re.I):
+        pixels.fill(OFF)
 
 
     #if re.search("exciting", transcript, re.I):
@@ -197,7 +200,7 @@ def scene_2():
     
 
     for i in range(0, num_pixels):
-        if i < 34:
+        if i < 34 and i%3 == 0:
             pixels[i] = BLUE
     
     #for j in range(0, 50):
@@ -206,7 +209,7 @@ def scene_2():
         #time.sleep(1.2)
 
     
-    pixels.brightness = 1
+    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
@@ -277,6 +280,8 @@ def scene_3():
     pixels.fill(OFF)
     time.sleep(0.6)
     
+    
+    
     for i in range (0, 4):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
         time.sleep(0.12)
@@ -301,10 +306,10 @@ def scene_4():
         if i < 34:
             pixels[i] = PURPLE
     
-    for i in range (0, 40):
-        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
-        time.sleep(0.1)
-        pixels.fill(OFF)
+    for i in range (0, 18):
+        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN #Need to be random.
+        time.sleep(0.5)
+        pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
     
     for i in range(0, num_pixels):
         if i < 34:
