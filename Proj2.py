@@ -28,7 +28,7 @@ crickit.servo_2.angle = 0
 
 # Define the basic color.
 RED = (255, 0, 0)
-YELLOW = (255, 150, 0)
+YELLOW = (220, 150, 0)
 GREEN = (0, 255, 0)
 CYAN = (0, 255, 255)
 BLUE = (0, 0, 100)
@@ -165,7 +165,7 @@ def decide_action(transcript):
     # Scene_4
     if re.search("party", transcript, re.I):
         scene_4()
-        
+
     if re.search("eigenvalue", transcript, re.I):
         pixels.fill(OFF)
 
@@ -178,42 +178,32 @@ def scene_1():
     Speaker_Action('scene_1.mp3')
     # Light
     for i in range(0, num_pixels):
-        if i < 34 and i%2 == 0:
+        if i < 34 and i%3 == 0:
             pixels[i] = YELLOW
-            pixels.brightness = 0.1
-            pixels.show()
-    
-    pixels.brightness = 1
+
+
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-    #Motor
-    #Motor_Action('scene_1')
+
 
 # Relax: relax
 def scene_2():
     # Breathing.
-    
+
     crickit.servo_2.angle = 180
 
     Speaker_Action('scene_2.mp3')
-    
 
     for i in range(0, num_pixels):
-        if i < 34 and i%3 == 0:
+        if i < 34 and i%2 == 0:
             pixels[i] = BLUE
-    
-    #for j in range(0, 50):
-       # pixels.brightness = (j%10)/10
-        #pixels.brightness = 0.1
-        #time.sleep(1.2)
+            time.sleep(0.5)
 
-    
-    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-    
+
     crickit.servo_2.angle = 0
 
 # Conflict: Ridiculous
@@ -221,7 +211,7 @@ def scene_3():
 
     Speaker_Action('scene_3.mp3')
     # Light
-    
+
     #fill_b(RED)
     #pixels.fill(OFF)
     time.sleep(1)
@@ -239,7 +229,7 @@ def scene_3():
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
         time.sleep(0.12)
         pixels.fill(OFF)
-    
+
     pixels.fill(RED)
     pixels.fill(OFF)
     time.sleep(0.88)
@@ -253,7 +243,7 @@ def scene_3():
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
         time.sleep(0.12)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-    
+
     pixels.fill(RED)
     pixels.fill(OFF)
     time.sleep(1)
@@ -268,7 +258,7 @@ def scene_3():
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
         time.sleep(0.12)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-    
+
     time.sleep(0.01)
     pixels.fill(RED)
     pixels.fill(OFF)
@@ -279,20 +269,20 @@ def scene_3():
     pixels.fill(RED) # 2 hit
     pixels.fill(OFF)
     time.sleep(0.6)
-    
-    
-    
+
+
+
     for i in range (0, 4):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
         time.sleep(0.12)
         pixels.fill(OFF)
-        
+
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-    
-        
-    
+
+
+
 
 # Party
 def scene_4():
@@ -301,20 +291,20 @@ def scene_4():
         pixels.fill((random.randint(20,220),random.randint(50,180),random.randint(20,220)))
         time.sleep(0.1)
         pixels.fill(OFF)
-    
+
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = PURPLE
-    
+
     for i in range (0, 18):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN #Need to be random.
         time.sleep(0.5)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-    
+
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-    
+
 
 
 def Speaker_Action(file):
