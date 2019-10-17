@@ -19,10 +19,11 @@ from adafruit_crickit import crickit
 from adafruit_seesaw.neopixel import NeoPixel
 
 
-num_pixels = 35  # Number (37) of pixels driven from Crickit NeoPixel terminal
+num_pixels = 37  # Number (37) of pixels driven from Crickit NeoPixel terminal
 
 # The following line sets up a NeoPixel strip on Seesaw pin 20 for Feather
 pixels = NeoPixel(crickit.seesaw, 20, num_pixels)
+#pixels_b = NeoPixel(crickit.seesaw, 20, 34)
 crickit.servo_2.angle = 0
 
 # Define the basic color.
@@ -36,7 +37,7 @@ OFF = (0,0,0)
 WHITE = (255,255,255)
 
 # Audio recording parameters, set for our USB mic.
-RATE = 44100 #if you change mics - be sure to change this :)
+RATE = 48000 #if you change mics - be sure to change this :) 44100
 CHUNK = int(RATE / 10)  # 100ms
 
 credential_path = "/home/pi/DET_wesley.json" #replace with your file name!
@@ -173,7 +174,11 @@ def scene_1():
 
     Speaker_Action('scene_1.mp3')
     # Light
-    pixels.fill(GREEN)
+    for i in range(0, num_pixels):
+        if i < 34:
+            pixels[i] = YELLOW
+    pixels.brightness = 0.1
+    pixels.show()
     # Motor
     #Motor_Action('scene_1')
 
@@ -187,24 +192,75 @@ def scene_2():
 
     Moter_Action('scene_2')
 
-# Conflict: Ridiculous/bad
+# Conflict: Ridiculous
 def scene_3():
 
     Speaker_Action('scene_3.mp3')
     # Light
-    for i in range(0, 5):
-        pixels.fill(RED)
+    
+    #fill_b(RED)
+    #pixels.fill(OFF)
+    time.sleep(1)
+    pixels.fill(RED) # 1 hit
+    pixels.fill(OFF)
+    time.sleep(0.86)
+    pixels.fill(RED) # 2 hit
+    pixels.fill(OFF)
+    time.sleep(0.86)
+    pixels.fill(RED) # 3 hit
+    pixels.fill(OFF)
+    time.sleep(0.86)
+    for i in range (0, 4):
+        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
+        time.sleep(0.12)
         pixels.fill(OFF)
-        time.sleep(1)
-        pixels.fill(RED)
+    
+    pixels.fill(RED)
+    pixels.fill(OFF)
+    time.sleep(0.88)
+    pixels.fill(RED) # 1 hit
+    pixels.fill(OFF)
+    time.sleep(0.88)
+    pixels.fill(RED) # 2 hit
+    pixels.fill(OFF)
+    time.sleep(0.6)
+    for i in range (0, 4):
+        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
+        time.sleep(0.12)
+        pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
+    
+    pixels.fill(RED)
+    pixels.fill(OFF)
+    time.sleep(1)
+    pixels.fill(RED) # 1 hit
+    pixels.fill(OFF)
+    time.sleep(0.89)
+    pixels.fill(RED) # 2 hit
+    pixels.fill(OFF)
+    time.sleep(0.89)
+
+    for i in range (0, 4):
+        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
+        time.sleep(0.12)
+        pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
+    
+    time.sleep(0.01)
+    pixels.fill(RED)
+    pixels.fill(OFF)
+    time.sleep(0.89)
+    pixels.fill(RED) # 1 hit
+    pixels.fill(OFF)
+    time.sleep(0.89)
+    pixels.fill(RED) # 2 hit
+    pixels.fill(OFF)
+    time.sleep(0.6)
+    for i in range (0, 4):
+        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
+        time.sleep(0.12)
         pixels.fill(OFF)
-        time.sleep(1)
-        pixels.fill(RED)
-        pixels.fill(OFF)
-        time.sleep(1)
-
-
-
+    
+        
+    
 
 # Party
 def scene_4():
@@ -225,16 +281,15 @@ def Speaker_Action(file):
 def Moter_Action(scene):
     if scene == 'scene_2':
         # motor.servo.2
-        crickit.servo_2.angle = 40 # Need to change.
-        time.sleep(0.5)
-        crickit.servo_2.angle = 20
+        crickit.servo_2.angle = 180 # Need to change.
+        #time.sleep(0.5)
+        #crickit.servo_2.angle = 20
         time.sleep(12)
-        crickit.servo_2.angle = 40
+        crickit.servo_2.angle = 0
 
 
 # Lighting effect.
 
-def _up()
 
 def Chasing(color = BLUE, gap = 0.03):
     for i in range(0, num_pixels):
@@ -249,7 +304,10 @@ def Party():
         time.sleep(0.1)
         pixels.fill(OFF)
 
-
+def fill_b(color):
+    for i in range(0, num_pixels):
+        if i < 34:
+            pixels[i] = color
 
 
 
@@ -257,11 +315,11 @@ def main():
     language_code = 'en-US'  # a BCP-47 language tag
     print("LED initialize white")
 
-    INIT = (200, 200, 200)
-    pixels.fill(WHITE)
-    #for i in range(0, 41):
-        #if i%2 == 0:
-            #pixels[i] = INIT
+    INIT = (255, 255, 255)
+    #pixels.fill(WHITE)
+    for i in range(0, num_pixels):
+        if i < 34:
+            pixels[i] = INIT
 
     #set up a client
     config = types.RecognitionConfig(
