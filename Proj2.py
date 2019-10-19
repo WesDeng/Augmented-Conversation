@@ -28,10 +28,10 @@ crickit.servo_2.angle = 0
 
 # Define the basic color.
 RED = (255, 0, 0)
-YELLOW = (220, 150, 0)
+YELLOW = (255, 150, 0)
 GREEN = (0, 255, 0)
 CYAN = (0, 255, 255)
-BLUE = (0, 0, 100)
+BLUE = (0, 100, 100)
 PURPLE = (180, 0, 255)
 OFF = (0,0,0)
 WHITE = (255,255,255)
@@ -151,8 +151,8 @@ def listen_print_loop(responses):
 def decide_action(transcript):
 
     # Scene_1
-    if re.search("sad",transcript, re.I):
-        scene_1()
+    #if re.search("sad",transcript, re.I):
+        #scene_1()
 
     # Scene_2
     if re.search("relax",transcript, re.I):
@@ -165,7 +165,7 @@ def decide_action(transcript):
     # Scene_4
     if re.search("party", transcript, re.I):
         scene_4()
-
+        
     if re.search("eigenvalue", transcript, re.I):
         pixels.fill(OFF)
 
@@ -176,42 +176,54 @@ def decide_action(transcript):
 def scene_1():
 
     Speaker_Action('scene_1.mp3')
-    # Light
+    
+    pixels.fill(OFF)
+
     for i in range(0, num_pixels):
-        if i < 34 and i%3 == 0:
+        if i < 34 and i%2 == 0:
             pixels[i] = YELLOW
-
-
+            pixels.brightness = 0.1
+            pixels.show()
+            
+    time.sleep(16)
+    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-
+    #Motor
+    #Motor_Action('scene_1')
 
 # Relax: relax
 def scene_2():
     # Breathing.
-
+    
     crickit.servo_2.angle = 180
+    
+    
+    pixels.fill(OFF)
 
     Speaker_Action('scene_2.mp3')
+
 
     for i in range(0, num_pixels):
         if i < 34 and i%2 == 0:
             pixels[i] = BLUE
-            time.sleep(0.5)
+            
+    time.sleep(15)
 
+    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-
-    crickit.servo_2.angle = 0
+    
+    #crickit.servo_2.angle = 0
 
 # Conflict: Ridiculous
 def scene_3():
 
     Speaker_Action('scene_3.mp3')
     # Light
-
+    
     #fill_b(RED)
     #pixels.fill(OFF)
     time.sleep(1)
@@ -225,11 +237,11 @@ def scene_3():
     pixels.fill(RED) # 3 hit
     pixels.fill(OFF)
     time.sleep(0.86)
-    for i in range (0, 4):
+    for i in range (0, 3):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
-        time.sleep(0.12)
+        time.sleep(0.16)
         pixels.fill(OFF)
-
+    
     pixels.fill(RED)
     pixels.fill(OFF)
     time.sleep(0.88)
@@ -239,11 +251,11 @@ def scene_3():
     pixels.fill(RED) # 2 hit
     pixels.fill(OFF)
     time.sleep(0.6)
-    for i in range (0, 4):
+    for i in range (0, 3):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
-        time.sleep(0.12)
+        time.sleep(0.16)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-
+    
     pixels.fill(RED)
     pixels.fill(OFF)
     time.sleep(1)
@@ -254,11 +266,11 @@ def scene_3():
     pixels.fill(OFF)
     time.sleep(0.89)
 
-    for i in range (0, 4):
+    for i in range (0, 3):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
-        time.sleep(0.12)
+        time.sleep(0.16)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-
+    
     time.sleep(0.01)
     pixels.fill(RED)
     pixels.fill(OFF)
@@ -269,42 +281,45 @@ def scene_3():
     pixels.fill(RED) # 2 hit
     pixels.fill(OFF)
     time.sleep(0.6)
-
-
-
-    for i in range (0, 4):
+    
+    
+    
+    for i in range (0, 3):
         pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN
-        time.sleep(0.12)
+        time.sleep(0.16)
         pixels.fill(OFF)
-
+        
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-
-
-
+    
+        
+    
 
 # Party
 def scene_4():
     Speaker_Action('scene_4.mp3')
     for i in range(0,60):
-        pixels.fill((random.randint(20,220),random.randint(50,180),random.randint(20,220)))
+        pixels.fill((random.randint(20,255),random.randint(20,255),random.randint(20,255)))
         time.sleep(0.1)
         pixels.fill(OFF)
-
+    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = PURPLE
-
-    for i in range (0, 18):
-        pixels[34], pixels[35], pixels[36] = YELLOW, BLUE, GREEN #Need to be random.
-        time.sleep(0.5)
+    
+    for i in range (0, 9):
+        Y = (random.randint(220,255),random.randint(125,175),0)
+        B = (0,random.randint(50,180),random.randint(200,255))
+        G = (0,random.randint(220,255),0)
+        pixels[34], pixels[35], pixels[36] = Y, B, G #Need to be random.
+        time.sleep(1)
         pixels[34], pixels[35], pixels[36] = OFF, OFF, OFF
-
+    
     for i in range(0, num_pixels):
         if i < 34:
             pixels[i] = WHITE
-
+    
 
 
 def Speaker_Action(file):
@@ -350,6 +365,8 @@ def fill_b(color):
 def main():
     language_code = 'en-US'  # a BCP-47 language tag
     print("LED initialize white")
+    
+    #crickit.servo_2.angle = 5
 
     #INIT = (255, 255, 255)
     #pixels.fill(WHITE)
